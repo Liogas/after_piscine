@@ -102,7 +102,7 @@ int	set_format_arg(char *arg, char *argf, int size)
 	return (0);
 }
 
-int	check_error_arg(char *arg)
+char	*check_error_arg(char *arg)
 {
 	char	*argf;
 	int		size;
@@ -111,24 +111,32 @@ int	check_error_arg(char *arg)
 	init_format(format);
 	size = ft_strlen_arg(arg, format);
 	if (size < 16 || size > 36)
-		return (1); 
+		return NULL; 
 	argf = (char *)malloc((size + 1) + sizeof(char));
 	if (!argf || set_format_arg(arg, argf, size) == 0)
 	{
 		free(argf);
-		return (1);
+		return NULL;
 	}
-	printf("Arg final récupéré : %s\n", argf);
-	free(argf);
-	return (0);
+	return (argf);
 }
 
 int	main(int argc, char **argv)
 {
-	if (argc != 2 || check_error_arg(argv[1]))
+	char	*argf;
+
+	if (argc != 2)
 	{
 		write(1, "ERROR\n", 6);
 		return (1);
 	}
+	argf = check_error_arg(argv[1]);
+	if (!argf)
+	{
+		write(1, "ERROR\n", 6);
+		return (1);
+	}
+	printf("Argument final : %s\n", argf);
+	free(argf);
 	return (0);
 }
