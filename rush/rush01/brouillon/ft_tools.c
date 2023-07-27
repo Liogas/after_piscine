@@ -13,3 +13,13 @@ int	ft_is_num(char c)
 {
 	return (c >= '1' && c <= '9');
 }
+
+int ft_strlen(char *str)
+{
+    int c;
+
+    c = 0;
+    while (str[c] != '\0')
+        c++;
+    return (c);
+}
