@@ -5,7 +5,7 @@
 /* 
 Fonction qui récupère le nombre de chiffres compris entre 
 1 et 9 présents dans l'argument donné au lancement du programme.
-Si ce nombre dépasse la taille max -> format[5] * 4 = 36. La fonction
+Si ce nombre dépasse la taille max -> format[6] * 4 = 36. La fonction
 return 0 pour prévenir d'une erreur.
 */
 int	check_strlen_arg(char *str, int *format)
@@ -20,7 +20,7 @@ int	check_strlen_arg(char *str, int *format)
 		if (ft_is_num(str[i]))
 		{
 			c++;
-			if (c > format[5] * 4)
+			if (c > format[6] * 4)
 				return (0);
 		}
 		i++;
@@ -80,12 +80,12 @@ l'un des formats autorisés par l'algorithme.
 int	check_format_arg(char *arg, char *argf, int size)
 {
 	int		i;
-	int		format[6];
+	int		format[7];
 
 	init_format(format);
 	printf("Chiffres présents dans l'arguments : %d\n", size);
 	i = 0;
-	while (i < 6)
+	while (i < 7)
 	{
 		if (size == format[i] * 4)
 		{
@@ -112,11 +112,11 @@ char	*check_error_arg(char *arg)
 {
 	char	*argf;
 	int		size;
-	int		format[6];
+	int		format[7];
 
 	init_format(format);
 	size = check_strlen_arg(arg, format);
-	if (size < 16 || size > 36)
+	if (size < 12 || size > 36)
 		return NULL; 
 	argf = (char *)malloc((size + 1) + sizeof(char));
 	if (!argf || check_format_arg(arg, argf, size) == 0)

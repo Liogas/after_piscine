@@ -1,11 +1,12 @@
 void	init_format(int *tab)
 {
-	tab[0] = 4;
-	tab[1] = 5;
-	tab[2] = 6;
-	tab[3] = 7;
-	tab[4] = 8;
-	tab[5] = 9;
+	tab[0] = 3;
+	tab[1] = 4;
+	tab[2] = 5;
+	tab[3] = 6;
+	tab[4] = 7;
+	tab[5] = 8;
+	tab[6] = 9;
 }
 
 int	ft_is_num(char c)
