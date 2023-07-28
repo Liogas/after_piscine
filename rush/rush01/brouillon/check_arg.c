@@ -53,14 +53,13 @@ int check_max_arg(char *arg, int max)
 Fonction qui stock les chiffres utiles dans la chaine argf (représente
 l'argument final), elle sera utile au lancement de l'algorithme.
 */
-void	set_argf(int size, char *arg, char *argf)
+void	set_argf(char *arg, char *argf)
 {
 	int		i;
 	int		k;
 
 	i = 0;
 	k = 0;
-	printf("size = %d\n", size);
 	while (arg[i] != '\0')
 	{
 		if (ft_is_num(arg[i]))
@@ -90,7 +89,7 @@ int	check_format_arg(char *arg, char *argf, int size)
 		if (size == format[i] * 4)
 		{
 			printf("size(%d) == format[%d](%d) * 4 = %d\n", size, i, format[i], format[i] * 4);
-			set_argf(size, arg, argf);
+			set_argf(arg, argf);
 			if (check_max_arg(argf, format[i]) == 1)
 			{
 				printf("L'algorithme fonctionnera avec le format de grille %d*%d\n", format[i], format[i]);
