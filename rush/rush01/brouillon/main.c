@@ -25,7 +25,7 @@ int	verif_line(int **grille, char *arg, int pos, int nb)
 			return (0);
 		}
 		i++;
-	}   
+	}
 	return (1);
 }
 
@@ -52,27 +52,19 @@ int ft_backtracking(int **grille, char *arg, int pos)
 	printf("--- Entrée n°%d dans la fonction backtracking ---\n", pos + 1);
 	int	y;
 	int	x;
+	
 	printf("Arguments donnés: ARG = %s | POS = %d\n", arg, pos);
 	printf("Etat de la grille au départ : \n");
 	display_grille(grille, ft_strlen(arg) / 4);
-	if (!pos)
-	{
-		y = 0;
-		x = 0;
-	}
-	else {
-		printf("%d | %d\n", pos, ft_strlen(arg) / 4);
-		y = pos / (ft_strlen(arg) / 4);
-		printf("%d | %d\n", pos, ft_strlen(arg) % 4);
-		x = pos % (ft_strlen(arg) / 4);
-	}
-	printf("y = %d | x = %d\n", y, x);
-	if (pos == ft_strlen(arg) && grille[y][x] != 0)
+	if (pos == ft_strlen(arg))
 	{
 		printf("Grille pleine\n");
 		display_grille(grille, ft_strlen(arg) / 4);
 		return (1);
 	}
+	y = pos / (ft_strlen(arg) / 4);
+	x = pos % (ft_strlen(arg) / 4);
+	printf("y = %d | x = %d\n", y, x);
 	if (grille[y][x] != 0)
 	{
 		printf("Case déjà remplie\n");
@@ -84,12 +76,6 @@ int ft_backtracking(int **grille, char *arg, int pos)
 	{
 		printf("Pas de possibilité\n");
 		return (0);
-	}
-	if (pos == ft_strlen(arg))
-	{
-		printf("Grille pleine\n");
-		display_grille(grille, ft_strlen(arg) / 4);
-		return (1);
 	}
 	printf("On continue le boulot !\n");
 	return (ft_backtracking(grille, arg, pos + 1));

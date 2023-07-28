@@ -18,7 +18,7 @@ int	**init_grille(char *arg)
 	if (!grille)
 		return (NULL);
 	i = -1;
-	while (i++ < size)
+	while (i++ < size - 1)
 	{
 		grille[i] = (int *)malloc(size * sizeof(int));
 		if (!grille[i])
@@ -27,7 +27,7 @@ int	**init_grille(char *arg)
 			return (NULL);
 		}
 		j = -1;
-		while (j++ < size)
+		while (j++ < size - 1)
 		{
 			grille[i][j] = 0;
 		}
