@@ -60,7 +60,6 @@ void    display_grille(int **grille, int size)
     int j;
 
     i = 0;
-    printf("Aperçu de la grille : \n");
 	while (i < size)
 	{
 		j = 0;

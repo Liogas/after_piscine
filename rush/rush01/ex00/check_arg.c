@@ -41,7 +41,7 @@ int check_max_arg(char *arg, int max)
 	{
 		if ((int)arg[i] - '0' < 0 || (int)arg[i] - '0' > max )
 		{
-			printf("arg[%d] contient : %c qui est supérieur à la taille max : %d\n", i, arg[i], max);
+			// printf("arg[%d] contient : %c qui est supérieur à la taille max : %d\n", i, arg[i], max);
 			return (0);
 		}
 		i++;
@@ -82,24 +82,24 @@ int	check_format_arg(char *arg, char *argf, int size)
 	int		format[7];
 
 	init_format(format);
-	printf("Chiffres présents dans l'arguments : %d\n", size);
+	// printf("Chiffres présents dans l'arguments : %d\n", size);
 	i = 0;
 	while (i < 7)
 	{
 		if (size == format[i] * 4)
 		{
-			printf("size(%d) == format[%d](%d) * 4 = %d\n", size, i, format[i], format[i] * 4);
+			// printf("size(%d) == format[%d](%d) * 4 = %d\n", size, i, format[i], format[i] * 4);
 			set_argf(arg, argf);
 			if (check_max_arg(argf, format[i]) == 1)
 			{
-				printf("L'algorithme fonctionnera avec le format de grille %d*%d\n", format[i], format[i]);
-				printf("FORMAT OK\n");
+				// printf("L'algorithme fonctionnera avec le format de grille %d*%d\n", format[i], format[i]);
+				// printf("FORMAT OK\n");
 				return (1);
 			}
 		}
 		i++;
 	}
-	printf("L'argument donné ne respecte pas le format\n");
+	// printf("L'argument donné ne respecte pas le format\n");
 	return (0);
 }
 
