@@ -1,7 +1,8 @@
 # after_piscine
 
 ## A faire :
-- c08
+- rush01  -> FAIT
+- c08     -> EN COURS
 - c09
 - c10
 - rush02
