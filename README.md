@@ -2,8 +2,8 @@
 
 ## A faire :
 - rush01  -> FAIT
-- c08     -> EN COURS
-- c09
+- c08     -> FAIT
+- c09     -> EN COURS
 - c10
 - rush02
 - c11
