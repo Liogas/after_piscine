@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -Werror
-AR=@ar -rv
+AR=ar -rv
 SRCS=srcs/*.c
 LIBFT=libft.a
 
