@@ -1,0 +1,9 @@
+Je suis un test
+pour savoir si le programme est 
+capable de me lire entièrement ou non.
+-
+-- 
+--- 
+Alors ?
+Bon ...
+FIN
