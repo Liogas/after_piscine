@@ -7,3 +7,5 @@ capable de me lire entièrement ou non.
 Alors ?
 Bon ...
 FIN
+Olala est-ce que tu es toujours capable de me lire malgrés que je dépasse la taille max pour ton buffer ???!
+Ehehehe réussi !

@@ -1,10 +1,13 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <stdio.h>
 
 void	ft_display_file(char *file_name)
 {
-	int	fd;
+	int		fd;
+	char	buf[128];
+	int		size;
 
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
@@ -12,7 +15,12 @@ void	ft_display_file(char *file_name)
 		write(1, "Cannot read file.\n", 18);
 		return ;
 	}
-	write(1, "En attente de la suite\n", 23);
+	while ((size = read(fd, buf, 127)) > 0)
+	{
+		buf[size] = 0;
+		write(1, buf, size);
+	}
+	close(fd);
 }
 
 int	main(int argc, char **argv)
