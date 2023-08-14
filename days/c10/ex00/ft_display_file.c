@@ -16,10 +16,7 @@ void	ft_display_file(char *file_name)
 		return ;
 	}
 	while ((size = read(fd, buf, 127)) > 0)
-	{
-		buf[size] = 0;
 		write(1, buf, size);
-	}
 	close(fd);
 }
 
