@@ -1,15 +1,8 @@
 #include <unistd.h>
-#include <stdio.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/stat.h>
-
-
-int	error_msg()
-{
-	write(1, "Error\n", 6);
-	return (1);
-}
+#include <string.h>
 
 void	ft_putstr(char *str)
 {
@@ -23,29 +16,38 @@ void	ft_putstr(char *str)
 	}
 }
 
-int file_error_msg(int error, char *file)
+int	error_msg(int error, char *file)
 {
-	write(1, "ft_cat: ", 8);
-	ft_putstr(file);
-	switch (error)
+	if (!error || !file)
 	{
-		case EACCES:
-			write(1,": Permission denied\n", 20);
-
-	};
+		write(1, "ft_cat: ", 8);
+		ft_putstr(file);
+		write(1, ": ", 2);
+		ft_putstr(strerror(error));
+		write(1, "\n", 1);
+	}
+	else
+		write(1, "Error\n", 6);
 	return (1);
 }
 
-int	ft_cat(char **arg, int size)
+void	ft_display_file(int fd)
+{
+	char	buf[128];
+	int		strlength;
+
+	while ((strlength = read(fd, buf, 127)) > 0)
+		write(1, buf, strlength);
+}
+
+int	ft_cat(char **arg)
 {
 	int		i;
 	int		fd;
-	char	buf[128];
-	int		strlength;
 	int 	err;
 
 	i = 0;
-	while(i < size)
+	while(arg[i])
 	{
 		if(i != 0)
 		{
@@ -53,29 +55,22 @@ int	ft_cat(char **arg, int size)
 			if (fd == -1)
 			{
 				err = errno;
-				return (file_error_msg(err, arg[i]));
+				error_msg(err, arg[i]);
 			}
-			while ((strlength = read(fd, buf, 127)) > 0)
-				write(1, buf, strlength);
-			close(fd);
+			else
+			{
+				ft_display_file(fd);
+				close(fd);
+			}
 		}
 		i++;
 	}
 	return (0);
 }
 
-int check_arg(int argc, char **argv)
-{
-	return (0);
-}
-
 int	main(int argc, char **argv)
 {
-	int	i;
-	int	err;
 	if(argc < 2)
-		return (error_msg());
-	if (check_arg(argc, argv))
-		return (error_msg());
-	return (ft_cat(argv, argc));
+		return (error_msg(0, 0));
+	return (ft_cat(argv));
 }
