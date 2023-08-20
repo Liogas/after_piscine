@@ -39,7 +39,7 @@ int open_dico(char *dico)
     file = 0;
     file = set_file(file, dico);
     if (!file)
-        return (1);
+        return (-1);
     fd = open(file, O_RDONLY);
     free(file);
     return (fd);
