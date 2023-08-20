@@ -1,5 +1,4 @@
 #include <unistd.h>
-#include <stdio.h>
 
 #include "h/check_arg.h"
 #include "h/error_msg.h"
