@@ -4,8 +4,8 @@
 - rush01  -> FAIT
 - c08     -> FAIT
 - c09     -> FAIT
-- c10     -> EN COURS
-- rush02
+- c10     -> FAIT (MANQUE DERNIER EX)
+- rush02  -> EN COURS
 - c11
 - c12
 - bsq
