@@ -4,12 +4,18 @@
 #include <unistd.h>
 
 #include "h/ft_str.h"
+#include "h/ft_char.h"
 
-char    *set_file(char *file, char *dico)
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
+
+char    *set_file(char *dico)
 {
     int     i;
     int     j;
     char    *d;
+    char    *file;
 
     d = "./dico/";
     file = (char *)malloc((ft_strlen(d) + ft_strlen(dico) + 1) * sizeof(char));
@@ -34,13 +40,46 @@ char    *set_file(char *file, char *dico)
 int open_dico(char *dico)
 {
     int     fd;
-    char    *file;
+    int     err;
 
-    file = 0;
-    file = set_file(file, dico);
-    if (!file)
+    if (!dico)
         return (1);
-    fd = open(file, O_RDONLY);
-    free(file);
+    fd = open(dico, O_RDONLY);
+    if (fd == -1)
+    {
+        err = errno;
+        printf("%s\n", strerror(err));
+        err = 1;
+    }
     return (fd);
+}
+
+int dico_lines(char *file)
+{
+    int     i;
+    int     lines;
+    int     fd;
+    char    buff[128];
+    int     size;
+
+    fd = open_dico(file);
+    if (!fd)
+        return (1);
+    lines = 1;
+    while ((size = read(fd, buff, sizeof(buff) - 1)) > 0)
+    {
+        i = 0;
+        while (i < size)
+        {
+            if (buff[i] == '\n')
+            {
+                while (buff[i + 1] == '\n')
+                    i++;
+                if (is_printable(buff[i + 1]))
+                    lines++;
+            }
+            i++;
+        }
+    }
+    return ((close(fd), lines));
 }

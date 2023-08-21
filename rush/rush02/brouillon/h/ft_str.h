@@ -3,5 +3,6 @@
 
 int ft_strlen(char *str);
 int str_only_num(char *str);
+int ft_atoi(char *str);
 
 #endif
