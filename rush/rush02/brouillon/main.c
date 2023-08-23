@@ -27,7 +27,8 @@ int rush02(char *dico, char *number)
     err = 0;
     // nb = ft_atoi(number);
     // printf("%s\n", file);
-    dico_verif(file);
+    if (dico_verif(file))
+        err++;
     free(file);
     return (err);
 }
@@ -50,5 +51,7 @@ int main(int argc, char **argv)
         if(rush02("number.dict", argv[1]))
             err++;
     }
+    if (!err)
+        write(1, "Aucune erreur\n", 14);
     return (err);
 }

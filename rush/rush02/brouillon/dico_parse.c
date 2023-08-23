@@ -10,65 +10,105 @@
 #include <errno.h>
 #include <string.h>
 
-char *set_line(char *buff, int start, int end)
+#define SIZE_BUFFER 128
+
+char    *set_line(char *buff, int start, int end)
 {
     char    *str;
     int     i;
 
     str = (char *)malloc((end - start + 2) * sizeof(char));
     if (!str)
-        return 0;
+        return (0);
     i = 0;
     while (start <= end)
     {
         str[i] = buff[start];
-        i++;
         start++;
+        i++;
     }
+    str[i] = '\0';
     return (str);
 }
 
-/*
-var[0] = i
-var[1] = fd
-var[2] = size use on read
-var[3] = start
-var[4] = end
-*/
-int dico_parse_file(char ***lines, char *file)
+char    **set_lines(char *buff, int size)
 {
-    int     var[5];
-    char    buff[128];
-    int     k;
-    int     err;
+    int     i;
+    int     j;
+    char    **lines;
+    int     start;
 
-    if((var[1] = open(file, O_RDONLY)) == -1)
+    lines = (char **)malloc((size + 1) * sizeof(char *));
+    if (!lines)
+        return (0);
+    i = 0;
+    j = 0;
+    start = -1;
+    while (buff[i] != '\0')
     {
-        printf("FIle = %s\n", file);
-        printf("erreur ouverture\n");
-        err = errno;
-        printf("%s\n", strerror(err));
-        return (1);
-    }
-    k = 0;
-    while ((var[2] = read(var[1], buff, sizeof(buff) - 1)) > 0)
-    {
-        var[0] = 0;
-        var[3] = -1;
-        var[4] = -1;
-        while (var[0] < var[2])
+        if (buff[i] != '\n' && start == -1)
+            start = i;
+        else if (buff[i] == '\n' && start != -1)
         {
-            if (buff[var[0]] != '\n' && var[3] == -1)
-                var[3] = var[0];
-            else if (buff[var[0]] == '\n' && var[3] != -1)
-            {
-                *lines[k] = set_line(buff, var[3], var[0] - 1);
-                var[3] = -1;
-                k++;
-            }
-            var[0]++;
+            lines[j] = set_line(buff, start, i - 1);
+            if (!lines[j])
+                return (0);
+            start = -1;
+            j++;
         }
+        i++;
     }
+    lines[j] = 0;
+    return (lines);
+}
+
+char    *add_buffer(char *new_buff, char *old_buff, int size)
+{
+    char    *buff;
+    int     i;
+    int     j;
+
+    buff = (char *)malloc((SIZE_BUFFER + ft_strlen(old_buff) + 1) * sizeof(char));
+    if (!buff)
+        return (0);
+    i = 0;
+    while (old_buff[i] != '\0')
+    {
+        buff[i] = old_buff[i];
+        i++;
+    }
+    j = 0;
+    while (j < size)
+    {
+        buff[i + j] = new_buff[j];
+        j++;
+    }
+    buff[i + j] = 0;
+    return (buff);
+}
+
+int dico_parse(char ***lines, char *file, int size)
+{
+    int     fd;
+    int     size_buff;
+    char    buff[SIZE_BUFFER];
+    char    *test;
+
+    if((fd = open(file, O_RDONLY)) == -1)
+        return (1);
+    test = "\0";
+    while ((size_buff = read(fd, buff, sizeof(buff) - 1)) > 0)
+    {
+        write(1, buff, size_buff);
+        write(1, "\n", 1);
+        test = add_buffer(buff, test, size_buff);
+        if (!test)
+            return (1);
+    }
+    *lines = set_lines(test, size);
+    if (!*lines)
+        return (1);
+    free(test);
     return (0);
 }
 
@@ -78,21 +118,16 @@ int dico_verif(char *file)
     char    **lines;
     int     i;
 
-    printf("Nom du file = %s\n", file);
+    lines = 0;
     if ((nb_lines = dico_lines(file)) < 1)
         return (1);
-    printf("nb_lines = %d\n", nb_lines);
-    lines = (char **)malloc((nb_lines + 1) * sizeof(char *));
-    if (!lines)
-        return (1);
-    printf("Nom du file = %s\n", file);
-    if (dico_parse_file(&lines, file))
+    if (dico_parse(&lines, file, nb_lines))
     {
-        printf("ERReur dico_parse_file\n");
+        free(lines);
         return (1);
     }
     i = 0;
-    while (i < nb_lines)
+    while (lines[i])
     {
         printf("lines[%d] = %s\n", i, lines[i]);
         i++;
@@ -103,6 +138,7 @@ int dico_verif(char *file)
         free(lines[i]);
         i++;
     }
+    
     free(lines);
     return (0);
 }   
